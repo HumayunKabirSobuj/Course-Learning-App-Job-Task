@@ -3,10 +3,10 @@ import { AuthController } from './auth.controller';
 
 const router = express.Router();
 
-// router.post(
-//   '/login',
-//   AuthController.loginUser,
-// );
+router.post(
+  '/login',
+  AuthController.loginUser,
+);
 router.post(
   '/register',
   AuthController.createRegisterUser,

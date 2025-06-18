@@ -6,3 +6,7 @@ export interface IUser {
   password: string;
   role: UserRole;
 }
+export type ILoginUser = {
+  email: string;
+  password: string;
+};
