@@ -7,7 +7,11 @@ const createCourse = async (payload: ICourse) => {
   const result = await Course.create(payload);
   return result;
 };
+const getAllCourses = async (): Promise<ICourse[]> => {
+  return Course.find().populate('User', 'name email role');
+};
 
 export const CourseServices = {
   createCourse,
+  getAllCourses,
 };
