@@ -1,28 +1,42 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import cors from 'cors';
 import express, { Application, Request, Response } from 'express';
+import cors from 'cors';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
+import router from './app/routes';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+
 const app: Application = express();
 
-//parsers
+// Middleware
 app.use(express.json());
-app.use(cors({ origin: ['http://localhost:5173'] }));
-// app.use(cookieParser());
-// application routes
-// app.use('/api/v1', router);
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: [
+      'https://bookbazzar-online-ph-a4.vercel.app',
+      'http://localhost:5173',
+    ],
+    credentials: true,
+  }),
+);
+app.use(bodyParser.json());
 
+// application route
+app.use('/api', router);
+
+// app.use('/order', orderRoutes);
+
+// Test route
 const test = async (req: Request, res: Response) => {
-  const a = 10;
-  res.send(a);
+  res.send('BookBazaar server is running...');
 };
 
 app.get('/', test);
 
-// app.use(globalErrorHandler);
 
-//Not Found
-// app.use(notFound);
+// Error handlers
+app.use(globalErrorHandler);
+app.use(notFound);
 
 export default app;
