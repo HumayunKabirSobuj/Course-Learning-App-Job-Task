@@ -40,7 +40,7 @@ const getSingleCourse = catchAsync(async (req, res) => {
 });
 
 const updateCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.updateCourse(req.params.id, req.body);  
+  const result = await CourseServices.updateCourse(req.params.id,req.user.id, req.body);  
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

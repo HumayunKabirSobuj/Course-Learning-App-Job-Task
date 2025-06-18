@@ -1,3 +1,5 @@
+import { HttpStatus } from 'http-status-ts';
+import AppError from '../../errors/AppError';
 import { ICourse } from './course.interface';
 import { Course } from './course.model';
 
@@ -16,7 +18,19 @@ export const getSingleCourse = async (id: string) => {
   return result;
 };
 
-const updateCourse = async (id: string, payload: Partial<ICourse>) => {
+const updateCourse = async (
+  id: string,
+  userId: string,
+  payload: Partial<ICourse>,
+) => {
+  const foundCourse = await Course.findOne({ _id: id, createdBy: userId });
+  if (!foundCourse) {
+    throw new AppError(
+      HttpStatus.UNAUTHORIZED,
+      'You are not authorized to update this course',
+    );
+  }
+  // console.log(foundCourse);
   const result = await Course.findByIdAndUpdate(
     id,
     { $set: payload },
@@ -29,5 +43,5 @@ export const CourseServices = {
   createCourse,
   getAllCourses,
   getSingleCourse,
-  updateCourse
+  updateCourse,
 };

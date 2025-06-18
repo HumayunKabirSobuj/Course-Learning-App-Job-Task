@@ -15,6 +15,6 @@ export interface ILesson {
 export interface ICourse {
   title: string;
   description: string;
-  User: Types.ObjectId;
+  createdBy: Types.ObjectId;
   lessons?: ILesson[];
 }
