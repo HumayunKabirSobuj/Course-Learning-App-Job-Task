@@ -1,5 +1,4 @@
-import { Schema, model } from 'mongoose';
-import bcrypt from 'bcrypt';
+import { model, Schema } from 'mongoose';
 import { IUser } from './auth.interface';
 
 const userSchema = new Schema<IUser>({
@@ -22,4 +21,4 @@ const userSchema = new Schema<IUser>({
 //   next();
 // });
 
-// export const User = model<IUser>('User', userSchema);
+export const User = model<IUser>('User', userSchema);

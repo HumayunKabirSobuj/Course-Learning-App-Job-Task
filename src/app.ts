@@ -11,29 +11,16 @@ const app: Application = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    origin: [
-      'https://bookbazzar-online-ph-a4.vercel.app',
-      'http://localhost:5173',
-    ],
-    credentials: true,
-  }),
-);
+app.use(cors());
 app.use(bodyParser.json());
 
 // application route
 app.use('/api', router);
 
-// app.use('/order', orderRoutes);
 
-// Test route
-const test = async (req: Request, res: Response) => {
-  res.send('BookBazaar server is running...');
-};
-
-app.get('/', test);
-
+app.get('/', async (req: Request, res: Response) => {
+  res.send('Course Learning App server is running...');
+});
 
 // Error handlers
 app.use(globalErrorHandler);
