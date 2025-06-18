@@ -6,7 +6,11 @@ import RoleValidation from '../../middlewares/RoleValidation';
 const router = express.Router();
 
 router.get('/', CourseController.getAllCourses);
-router.get('/:id', CourseController.getSingleCourse);
+router.get(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
+  CourseController.getSingleCourse,
+);
 router.post(
   '/create-course',
   RoleValidation(EnumUserRole.TEACHER),

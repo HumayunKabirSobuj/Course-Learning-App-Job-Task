@@ -2,6 +2,7 @@ import { HttpStatus } from 'http-status-ts';
 import AppError from '../../errors/AppError';
 import { ICourse } from './course.interface';
 import { Course } from './course.model';
+import { Types } from 'mongoose';
 
 const createCourse = async (payload: ICourse) => {
   //   console.log({ payload });
@@ -10,12 +11,32 @@ const createCourse = async (payload: ICourse) => {
   return result;
 };
 const getAllCourses = async () => {
-  return Course.find().populate('User', 'name email role');
+  return Course.find().populate('createdBy', 'name email role');
 };
 
-export const getSingleCourse = async (id: string) => {
-  const result = Course.findById(id);
-  return result;
+// export const getSingleCourse = async (id: string) => {
+//   const result = Course.findById(id);
+//   return result;
+// };
+
+export const getSingleCourse = async (id: string, userId: string) => {
+  const course = await Course.findById(id);
+
+  if (!course) {
+    throw new Error('Course not found');
+  }
+
+  // Check if user already viewed
+  const alreadyViewed = course.views?.some(
+    (viewedUserId: Types.ObjectId) => viewedUserId.toString() === userId,
+  );
+
+  if (!alreadyViewed) {
+    course.views?.push(new Types.ObjectId(userId));
+    await course.save();
+  }
+
+  return course;
 };
 
 const updateCourse = async (

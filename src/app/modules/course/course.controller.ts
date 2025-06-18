@@ -7,7 +7,7 @@ const createCourse = catchAsync(async (req, res) => {
   const user = req.user;
   const data = {
     ...req.body,
-    User: user._id,
+    createdBy: user._id,
   };
   // console.log(data);
 
@@ -30,7 +30,7 @@ const getAllCourses = catchAsync(async (req, res) => {
   });
 });
 const getSingleCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.getSingleCourse(req.params.id);
+  const result = await CourseServices.getSingleCourse(req.params.id, req.user.id);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
