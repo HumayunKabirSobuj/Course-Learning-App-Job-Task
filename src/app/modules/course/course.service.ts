@@ -1,4 +1,3 @@
-
 import { ICourse } from './course.interface';
 import { Course } from './course.model';
 
@@ -17,8 +16,18 @@ export const getSingleCourse = async (id: string) => {
   return result;
 };
 
+const updateCourse = async (id: string, payload: Partial<ICourse>) => {
+  const result = await Course.findByIdAndUpdate(
+    id,
+    { $set: payload },
+    { new: true },
+  );
+  return result;
+};
+
 export const CourseServices = {
   createCourse,
   getAllCourses,
   getSingleCourse,
+  updateCourse
 };

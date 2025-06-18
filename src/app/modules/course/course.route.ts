@@ -13,4 +13,10 @@ router.post(
   CourseController.createCourse,
 );
 
+router.patch(
+  '/update-course/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  CourseController.updateCourse,
+);
+
 export const CourseRoutes = router;
