@@ -126,7 +126,7 @@ cd Spark_Tech_Job_Task
 | DELETE | `/api/topic/:id` | Delete a topic by ID     | Teacher          |
 
 
-### Topic API Endpoints
+### Enrollments API Endpoints
 
 | Method | Endpoint            | Description              | Access Role(s)   |
 | ------ | ------------------- | ------------------------ | ---------------- |
