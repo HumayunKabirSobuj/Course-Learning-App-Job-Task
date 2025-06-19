@@ -32,8 +32,32 @@ const getSingleQuiz = catchAsync(async (req, res) => {
   });
 });
 
+const updateQuiz = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await QuizService.updateQuiz(id, req.body);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Quiz updated successfully',
+    data: result,
+  });
+});
+
+const deleteQuiz = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await QuizService.deleteQuiz(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Quiz deleted successfully',
+    data: result,
+  });
+});
+
 export const QuizController = {
   createQuiz,
   getAllQuizzes,
   getSingleQuiz,
+  updateQuiz,
+  deleteQuiz
 };

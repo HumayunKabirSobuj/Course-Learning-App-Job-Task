@@ -24,15 +24,18 @@ router.post(
   QuizController.createQuiz,
 );
 
-// router.patch(
-//   '/:id',
-//   RoleValidation(EnumUserRole.TEACHER),
-//   TopicControllers.updateTopic,
-// );
-// router.delete(
-//   '/:id',
-//   RoleValidation(EnumUserRole.TEACHER),
-//   TopicControllers.deleteTopic,
-// );
+router.patch(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  QuizController.updateQuiz,
+);
+
+router.delete(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  QuizController.deleteQuiz,
+);
+
+
 
 export const QuizRoutes = router;
