@@ -1,6 +1,7 @@
 # 🎓 Course Learning App (LMS Backend)
+A fully-featured and modular Learning Management System (LMS) backend built using Node.js, Express, TypeScript, and MongoDB. This system empowers seamless interaction between students and teachers through structured course creation, lesson planning, topic management, quizzes, and progress tracking.
 
-A robust and scalable Learning Management System (LMS) backend built with Node.js, Express, MongoDB, and TypeScript. This API connects students and teachers through structured courses, lessons, topics, quizzes, and performance tracking.
+It is designed to be scalable, maintainable, and secure, making it ideal for modern education platforms.
 
 ---
 
