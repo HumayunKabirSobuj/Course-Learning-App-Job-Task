@@ -27,7 +27,18 @@ const getAllEnrollments = catchAsync(async (req, res) => {
   });
 });
 
+const GetMySelfEnrollment = catchAsync(async (req, res) => {
+  const studentId = req.user._id; // Assuming req.user is populated with the authenticated user's data
+  const result = await EnrollmentService.GetMySelfEnrollment(studentId);
+  return sendResponse(res, {
+    statusCode: HttpStatus.OK,
+    success: true,
+    message: 'My enrollment retrieved successfully',
+    data: result,
+  });
+});
 export const EnrollmentController = {
   createEnrollment,
-  getAllEnrollments
+  getAllEnrollments,
+  GetMySelfEnrollment
 };

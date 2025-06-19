@@ -10,6 +10,11 @@ router.get(
   RoleValidation(EnumUserRole.TEACHER),
   EnrollmentController.getAllEnrollments,
 );
+router.get(
+  '/my-enrollment',
+  RoleValidation(EnumUserRole.STUDENT),
+  EnrollmentController.GetMySelfEnrollment,
+);
 
 router.post(
   '/',

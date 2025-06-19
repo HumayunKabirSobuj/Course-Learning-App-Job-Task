@@ -53,12 +53,21 @@ const createEnrollment = async (payload: TEnrollment) => {
 };
 
 const getAllEnrollments = async () => {
-  const result = await Enrollment.find().populate('studentId', 'name email')
+  const result = await Enrollment.find()
+    .populate('studentId', 'name email')
+    .populate('courseId', 'title description');
+  return result;
+};
+
+const GetMySelfEnrollment = async (studentId: string) => {
+  const result = await Enrollment.find({ studentId })
+    .populate('studentId', 'name email')
     .populate('courseId', 'title description');
   return result;
 };
 
 export const EnrollmentService = {
   createEnrollment,
-  getAllEnrollments
+  getAllEnrollments,
+  GetMySelfEnrollment
 };
