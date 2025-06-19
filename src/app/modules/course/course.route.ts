@@ -8,8 +8,8 @@ const router = express.Router();
 router.get('/', CourseController.getAllCourses);
 router.get(
   '/:id',
-  RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
   CourseController.getSingleCourse,
+  RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
 );
 router.post(
   '/create-course',
@@ -17,10 +17,10 @@ router.post(
   CourseController.createCourse,
 );
 
-router.patch(
-  '/update-course/:id',
+router.delete(
+  '/:id',
   RoleValidation(EnumUserRole.TEACHER),
-  CourseController.updateCourse,
+  CourseController.deleteCourse,
 );
 
 export const CourseRoutes = router;
