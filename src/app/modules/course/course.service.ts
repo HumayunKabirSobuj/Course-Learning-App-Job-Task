@@ -26,7 +26,7 @@ const getAllCourses = async (
   return Course.find(filter)
     .skip(pagination.skip)
     .limit(pagination.limit)
-    .populate('teacherId', 'name email role');
+    .populate('teacherId', 'name email role').populate('lessons', 'title description');;
 };
 
 const getSingleCourse = async (id: string, studentId: string) => {

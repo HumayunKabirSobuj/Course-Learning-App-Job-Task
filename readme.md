@@ -1,4 +1,5 @@
 # 🎓 Course Learning App (LMS Backend)
+
 A fully-featured and modular Learning Management System (LMS) backend built using Node.js, Express, TypeScript, and MongoDB. This system empowers seamless interaction between students and teachers through structured course creation, lesson planning, topic management, quizzes, and progress tracking.
 
 It is designed to be scalable, maintainable, and secure, making it ideal for modern education platforms.
@@ -84,7 +85,6 @@ cd Course-Learning-App-Job-Task
 
     npm run dev
 
-
 ```
 
 ### Auth
@@ -134,3 +134,14 @@ cd Course-Learning-App-Job-Task
 | GET    | `/api/enrollment`     | Get all Enrollments           | Teacher |
 | GET    | `/api/enrollment/my-enrollment` | Get Myself Enrollments | Student          |
 
+
+### Quiz API Endpoints
+
+| Method | Endpoint            | Description              | Access Role(s)   |
+| ------ | ------------------- | ------------------------ | ---------------- |
+| POST   | `/api/quiz`   | Create a new Quiz      | Teacher      |
+| GET    | `/api/quiz`     | Get all Quiz           | Teacher, Student |
+| GET    | `/api/quiz/:id` | Get Single Quiz |  Teacher, Student       |
+| PATCH    | `/api/quiz/:id` | Update Single Quiz |  Teacher     |
+| DELETE    | `/api/quiz/:id` | Delete Single Quiz |  Teacher     |
+```
