@@ -17,7 +17,17 @@ const createEnrollment = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getAllEnrollments = catchAsync(async (req, res) => {
+  const result = await EnrollmentService.getAllEnrollments();
+  sendResponse(res, {
+    statusCode: HttpStatus.OK,
+    success: true,
+    message: ' All enrollments retrieved successfully',
+    data: result,
+  });
+});
 
 export const EnrollmentController = {
   createEnrollment,
+  getAllEnrollments
 };

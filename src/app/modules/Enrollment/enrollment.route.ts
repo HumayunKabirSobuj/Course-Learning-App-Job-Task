@@ -5,13 +5,16 @@ import { EnrollmentController } from './enrollment.controller';
 
 const router = express.Router();
 
+router.get(
+  '/',
+  RoleValidation(EnumUserRole.TEACHER),
+  EnrollmentController.getAllEnrollments,
+);
 
 router.post(
   '/',
   RoleValidation(EnumUserRole.STUDENT),
   EnrollmentController.createEnrollment,
 );
-
-
 
 export const EnrollmentRoutes = router;

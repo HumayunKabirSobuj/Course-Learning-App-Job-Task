@@ -11,7 +11,9 @@ const createEnrollment = async (payload: TEnrollment) => {
   try {
     session.startTransaction();
 
-    const isCourseExists = await Course.findById(payload.courseId).session(session);
+    const isCourseExists = await Course.findById(payload.courseId).session(
+      session,
+    );
     if (!isCourseExists) {
       throw new AppError(HttpStatus.NOT_FOUND, 'Course not found');
     }
@@ -24,7 +26,7 @@ const createEnrollment = async (payload: TEnrollment) => {
     if (isAlreadyEnrolled) {
       throw new AppError(
         HttpStatus.CONFLICT,
-        'You are already enrolled in this course'
+        'You are already enrolled in this course',
       );
     }
 
@@ -33,23 +35,30 @@ const createEnrollment = async (payload: TEnrollment) => {
     await Course.findByIdAndUpdate(
       payload.courseId,
       { $inc: { enrollment: 1 } },
-      { session }
+      { session },
     );
 
     await session.commitTransaction();
     return enrollment[0];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     await session.abortTransaction();
     throw new AppError(
       HttpStatus.INTERNAL_SERVER_ERROR,
-      error?.message || 'Something went wrong during enrollment'
+      error?.message || 'Something went wrong during enrollment',
     );
   } finally {
     session.endSession(); // Always close the session
   }
 };
 
+const getAllEnrollments = async () => {
+  const result = await Enrollment.find().populate('studentId', 'name email')
+    .populate('courseId', 'title description');
+  return result;
+};
+
 export const EnrollmentService = {
   createEnrollment,
+  getAllEnrollments
 };
