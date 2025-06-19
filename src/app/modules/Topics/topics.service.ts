@@ -59,7 +59,7 @@ const createTopic = async (payload: TTopic) => {
 };
 
 const getAllTopics = async () => {
-  const result = await Topic.find().populate(['courseId', 'lessonId']);
+  const result = await Topic.find().populate('courseId', 'title description').populate('lessonId', 'title description');
   return result;
 };
 
@@ -76,8 +76,8 @@ const getSingleTopic = async (topicId: string) => {
 
 const UpdateTopic = async (id: string, payload: Partial<TTopic>) => {
   const result = await Topic.findOneAndUpdate({ _id: id }, payload);
-  if( !result) {
-    throw new AppError(HttpStatus.NOT_FOUND, 'Topic not found');  
+  if (!result) {
+    throw new AppError(HttpStatus.NOT_FOUND, 'Topic not found');
   }
   return result;
 };
@@ -93,7 +93,7 @@ const deleteSingleTopic = async (id: string) => {
     // find topic
     const topic = await Topic.findById(id).session(session);
     if (!topic) {
-      throw new AppError(HttpStatus.NOT_FOUND, "Topic not found");
+      throw new AppError(HttpStatus.NOT_FOUND, 'Topic not found');
     }
     // delete topic
     const result = await Topic.deleteOne({ _id: id }).session(session);
@@ -105,17 +105,17 @@ const deleteSingleTopic = async (id: string) => {
     await Lesson.findByIdAndUpdate(
       topic.lessonId,
       { $pull: { topics: id } },
-      { session }
+      { session },
     );
 
     // Commit transaction
     await session.commitTransaction();
 
     return result;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     await session.abortTransaction();
-    throw new AppError(HttpStatus.BAD_REQUEST, err.message || "Operation Faid");
+    throw new AppError(HttpStatus.BAD_REQUEST, err.message || 'Operation Faid');
   } finally {
     session.endSession();
   }
@@ -124,8 +124,7 @@ const deleteSingleTopic = async (id: string) => {
 export const TopicServices = {
   createTopic,
   getAllTopics,
-  getSingleTopic
-  ,
+  getSingleTopic,
   UpdateTopic,
-  deleteSingleTopic
+  deleteSingleTopic,
 };

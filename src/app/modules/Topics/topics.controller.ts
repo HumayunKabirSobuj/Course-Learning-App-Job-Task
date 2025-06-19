@@ -14,6 +14,7 @@ const createTopic = catchAsync(async (req, res) => {
 });
 
 const getAllTopics = catchAsync(async (req, res) => {
+  
   const result = await TopicServices.getAllTopics();
 
   sendResponse(res, {
@@ -37,7 +38,7 @@ const getSingleTopic = catchAsync(async (req, res) => {
 const updateTopic = catchAsync(async (req, res) => {
   const { id } = req.params;
 
-  console.log(id);
+  // console.log(id);
 
   const result = await TopicServices.UpdateTopic(id, req.body);
   sendResponse(res, {

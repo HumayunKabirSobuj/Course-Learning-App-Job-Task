@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Types } from 'mongoose';
 
 export type TCourse = {
   title: string;
@@ -6,8 +6,9 @@ export type TCourse = {
   subject?: string;
   level?: string;
   teacherId: Types.ObjectId;
-  lessons?:Types.ObjectId[],
-  views:number,
-  enrollment:number,
-  like:number
+  lessons?: Types.ObjectId[];
+  views: number;
+  enrollment: number;
+  like: number;
+  viewedBy?: Types.ObjectId[];
 };

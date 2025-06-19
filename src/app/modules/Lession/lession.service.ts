@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HttpStatus } from 'http-status-ts';
 import AppError from '../../errors/AppError';
 import { TLesson } from './lession.interface';
@@ -12,13 +13,17 @@ const createLession = async (payload: TLesson) => {
   try {
     const { courseId, title, description } = payload;
 
-    const isCourseExist = await Course.findById({ _id: courseId }).session(session);
+    const isCourseExist = await Course.findById({ _id: courseId }).session(
+      session,
+    );
 
     if (!isCourseExist) {
       throw new AppError(HttpStatus.NOT_FOUND, 'Course not found');
     }
 
-    const isLessonExist = await Lesson.findOne({ courseId, title }).session(session);
+    const isLessonExist = await Lesson.findOne({ courseId, title }).session(
+      session,
+    );
 
     if (isLessonExist) {
       throw new AppError(HttpStatus.CONFLICT, 'Lesson already exists');
@@ -40,7 +45,7 @@ const createLession = async (payload: TLesson) => {
 
     await session.commitTransaction();
     return lessionPost;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     await session.abortTransaction();
     throw new AppError(500, err.message || 'Operation Failed');
@@ -49,9 +54,16 @@ const createLession = async (payload: TLesson) => {
   }
 };
 
-
-const getAllLessonFromDB = async () => {
-  const result = await Lesson.find();
+const getAllLessonFromDB = async (
+  filter: any,
+  pagination: {
+    skip: number;
+    limit: number;
+  },
+) => {
+  const result = await Lesson.find(filter)
+    .skip(pagination.skip)
+    .limit(pagination.limit);
   return result;
 };
 
@@ -73,8 +85,6 @@ const updateLession = async (id: string, payload: Partial<TLesson>) => {
       throw new AppError(HttpStatus.NOT_FOUND, 'Lesson not found');
     }
 
-    
-
     const updatedLesson = await Lesson.findByIdAndUpdate(id, payload, {
       new: true,
     });
@@ -87,7 +97,7 @@ const updateLession = async (id: string, payload: Partial<TLesson>) => {
 };
 
 const deleteLession = async (id: string) => {
-  const session = await mongoose.startSession();  
+  const session = await mongoose.startSession();
   session.startTransaction();
   try {
     const isLessonExist = await Lesson.findById(id);
@@ -97,7 +107,10 @@ const deleteLession = async (id: string) => {
 
     const deletedLesson = await Lesson.findByIdAndDelete(id);
     if (!deletedLesson) {
-      throw new AppError(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete lesson');
+      throw new AppError(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to delete lesson',
+      );
     }
 
     await Course.findByIdAndUpdate(
@@ -108,19 +121,19 @@ const deleteLession = async (id: string) => {
 
     await session.commitTransaction();
     return deletedLesson;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     await session.abortTransaction();
     throw new AppError(500, err.message || 'Operation Failed');
   } finally {
     session.endSession();
   }
-}
+};
 
 export const LessionService = {
   createLession,
   getAllLessonFromDB,
   getSingleLesson,
   updateLession,
-  deleteLession
+  deleteLession,
 };

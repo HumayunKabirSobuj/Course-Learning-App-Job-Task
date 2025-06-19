@@ -8,11 +8,12 @@ const router = express.Router();
 
 router.get(
   '/',
-  queryHelper(['title']),
+  queryHelper(['title', 'description', 'subject', 'level']),
   CourseController.getAllCourses,
 );
 router.get(
   '/:id',
+  RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
   CourseController.getSingleCourse,
   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
 );

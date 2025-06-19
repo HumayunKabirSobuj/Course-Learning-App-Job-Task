@@ -7,8 +7,7 @@ const userSchema = new Schema<IUser>({
   password: { type: String, required: true },
   role: {
     type: String,
-    enum: ['student', 'teacher'],
-    required: true,
+    default: 'student',
   },
 });
 

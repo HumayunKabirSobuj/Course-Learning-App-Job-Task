@@ -12,6 +12,8 @@ const courseSchema = new Schema<TCourse>(
     views: { type: Number, default: 0, required: true },
     enrollment: { type: Number, default: 0, required: true },
     like: { type: Number, default: 0, required: true },
+    // 👇 নতুন ফিল্ড
+    viewedBy: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   },
   {
     timestamps: true,

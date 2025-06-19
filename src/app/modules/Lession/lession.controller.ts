@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { LessionService } from './lession.service';
@@ -14,12 +15,20 @@ const createLession = catchAsync(async (req, res) => {
 });
 
 const getAllLessonFromDB = catchAsync(async (req, res) => {
-  const result = await LessionService.getAllLessonFromDB();
+  const { filter = {}, pagination = { page: 1, limit: 10 } } =
+    (req as any).filterData || {};
+  const result = await LessionService.getAllLessonFromDB(filter, pagination);
   sendResponse(res, {
     statusCode: HttpStatus.OK,
     success: true,
     message: 'All Lessons fetched successfully',
     data: result,
+    meta: {
+      total: result.length, // মোট কয়টা ডেটা আছে
+      page: pagination.page, // এখন কোন পেজে আছি
+      limit: pagination.limit, // প্রতি পেজে কয়টা
+      totalPages: Math.ceil(result.length / pagination.limit),
+    },
   });
 });
 
@@ -35,7 +44,7 @@ const getSingleLesson = catchAsync(async (req, res) => {
 });
 
 const updateLession = catchAsync(async (req, res) => {
-  const { id } = req.params;  
+  const { id } = req.params;
   const result = await LessionService.updateLession(id, req.body);
   sendResponse(res, {
     statusCode: HttpStatus.OK,
@@ -43,7 +52,6 @@ const updateLession = catchAsync(async (req, res) => {
     message: 'Lesson updated successfully',
     data: result,
   });
-
 });
 
 const deleteLession = catchAsync(async (req, res) => {
@@ -55,14 +63,12 @@ const deleteLession = catchAsync(async (req, res) => {
     message: 'Lesson deleted successfully',
     data: result,
   });
-}
-);
-
+});
 
 export const LessionController = {
   createLession,
   getAllLessonFromDB,
   getSingleLesson,
   updateLession,
-  deleteLession
+  deleteLession,
 };

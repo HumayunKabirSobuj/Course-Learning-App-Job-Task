@@ -23,7 +23,8 @@ const createCourse = catchAsync(async (req, res) => {
 });
 
 const getAllCourses = catchAsync(async (req, res) => {
-  const { filter, pagination } = (req as any).filterData;
+  const { filter = {}, pagination = { page: 1, limit: 10 } } =
+    (req as any).filterData || {};
   const result = await CourseServices.getAllCourses(filter, pagination);
   // If result is an array, use it directly; otherwise, adjust as needed
   sendResponse(res, {
@@ -42,7 +43,8 @@ const getAllCourses = catchAsync(async (req, res) => {
 
 const getSingleCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.getSingleCourse(id);
+  const user =req.user
+  const result = await CourseServices.getSingleCourse(id, user._id);
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

@@ -5,6 +5,13 @@ import { Course } from './course.model';
 const createCourse = async (payload: TCourse) => {
   //   console.log({ payload });
 
+  const isCourseExist = await Course.findOne({
+    title: payload.title,
+  });
+
+  if (isCourseExist) {
+    throw new Error('Course with this title already exists');
+  }
   const result = await Course.create(payload);
   return result;
 };
@@ -22,11 +29,25 @@ const getAllCourses = async (
     .populate('teacherId', 'name email role');
 };
 
-const getSingleCourse = async (id: string) => {
+const getSingleCourse = async (id: string, studentId: string) => {
+  console.log(studentId);
+
   const result = await Course.findById(id).populate(
     'teacherId',
     'name email role',
   );
+
+  const hasViewed = result?.viewedBy?.some(
+    (id) => id.toString() === studentId.toString(),
+  );
+
+
+  if (!hasViewed) {
+    await Course.findByIdAndUpdate(result?._id, { $inc: { views: 1 } });
+    await Course.findByIdAndUpdate(result?._id, {
+      $push: { viewedBy: studentId },
+    });
+  }
 
   return result;
 };
