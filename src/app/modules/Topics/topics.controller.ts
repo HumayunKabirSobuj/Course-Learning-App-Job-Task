@@ -8,7 +8,7 @@ const createTopic = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: HttpStatus.OK,
     success: true,
-    message: 'Course Created successfully',
+    message: 'Topic Added successfully',
     data: result,
   });
 });
