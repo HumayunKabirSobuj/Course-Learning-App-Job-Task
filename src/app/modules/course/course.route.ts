@@ -11,6 +11,12 @@ router.get(
   CourseController.getSingleCourse,
   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
 );
+
+router.patch(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  CourseController.updateCourse,
+);
 router.post(
   '/create-course',
   RoleValidation(EnumUserRole.TEACHER),

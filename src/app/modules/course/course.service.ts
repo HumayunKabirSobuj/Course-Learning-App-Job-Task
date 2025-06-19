@@ -74,9 +74,27 @@ const deleteCourse = async (id: string, userId: string) => {
   return result;
 };
 
+const updateCourse = async (
+  id: string,
+  userId: string,
+  payload: Partial<TCourse>,
+) => {
+  const foundCourse = await Course.findOne({ _id: id, teacherId: userId });
+  if (!foundCourse) {
+    throw new Error('You are not authorized to update this course');
+  }
+  const result = await Course.findByIdAndUpdate(
+    id,
+    { $set: payload },
+    { new: true },
+  );
+  return result;
+};
+
 export const CourseServices = {
   createCourse,
   getAllCourses,
   getSingleCourse,
   deleteCourse,
+  updateCourse
 };
