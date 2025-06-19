@@ -63,19 +63,23 @@ cd Spark_Tech_Job_Task
 
 **Step - 4:** put the below code in the env file and probide your own database creadentials
 
-```
 
-port: Your port Number,
-database_url: Your Database Url,
-bcrypt_salt_rounds: bcrypt salt rounds number,
-jwt_access_secret: JWT ACCESS SECRET,
-jwt_refresh_secret: JWT Refresh secret,
-jwt_access_expires_in: JWT access expire in,
-jwt_refresh_expires_in: JWT access expire in,
 
-```
+### 📦 Environment Variables
+
+| Key                      | Description                                                   |
+|--------------------------|---------------------------------------------------------------|
+| `port`                   | Your application's port number.                               |
+| `database_url`           | MongoDB connection URL.                                       |
+| `bcrypt_salt_rounds`     | Number of salt rounds for bcrypt password hashing.            |
+| `jwt_access_secret`      | Secret key for signing access tokens.                         |
+| `jwt_refresh_secret`     | Secret key for signing refresh tokens.                        |
+| `jwt_access_expires_in`  | Expiration time for access tokens (e.g., `1h`, `15m`).        |
+| `jwt_refresh_expires_in` | Expiration time for refresh tokens (e.g., `7d`).              |
+
 
 **Step - 5:** use the below commend for run the application
+
 ```
 
     npm run dev
