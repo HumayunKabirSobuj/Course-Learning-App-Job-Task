@@ -125,3 +125,12 @@ cd Spark_Tech_Job_Task
 | PATCH  | `/api/topic/:id` | Update a topic by ID     | Teacher          |
 | DELETE | `/api/topic/:id` | Delete a topic by ID     | Teacher          |
 
+
+### Topic API Endpoints
+
+| Method | Endpoint            | Description              | Access Role(s)   |
+| ------ | ------------------- | ------------------------ | ---------------- |
+| POST   | `/api/enrollment`   | Create a new Enrollment      | Student      |
+| GET    | `/api/enrollment`     | Get all Enrollments           | Teacher |
+| GET    | `/api/enrollment/my-enrollment` | Get Myself Enrollments | Student          |
+
