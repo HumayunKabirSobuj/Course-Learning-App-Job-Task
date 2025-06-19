@@ -74,8 +74,58 @@ const getSingleTopic = async (topicId: string) => {
   return result;
 };
 
+const UpdateTopic = async (id: string, payload: Partial<TTopic>) => {
+  const result = await Topic.findOneAndUpdate({ _id: id }, payload);
+  if( !result) {
+    throw new AppError(HttpStatus.NOT_FOUND, 'Topic not found');  
+  }
+  return result;
+};
+
+// delete single Topic
+const deleteSingleTopic = async (id: string) => {
+  // create session
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    // find topic
+    const topic = await Topic.findById(id).session(session);
+    if (!topic) {
+      throw new AppError(HttpStatus.NOT_FOUND, "Topic not found");
+    }
+    // delete topic
+    const result = await Topic.deleteOne({ _id: id }).session(session);
+
+    // Delete all quiz with this topic
+    // await Quiz.deleteMany({ topicId: id }).session(session);
+
+    // Remove topic id from the lesson's topics array
+    await Lesson.findByIdAndUpdate(
+      topic.lessonId,
+      { $pull: { topics: id } },
+      { session }
+    );
+
+    // Commit transaction
+    await session.commitTransaction();
+
+    return result;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    await session.abortTransaction();
+    throw new AppError(HttpStatus.BAD_REQUEST, err.message || "Operation Faid");
+  } finally {
+    session.endSession();
+  }
+};
+
 export const TopicServices = {
   createTopic,
   getAllTopics,
   getSingleTopic
+  ,
+  UpdateTopic,
+  deleteSingleTopic
 };

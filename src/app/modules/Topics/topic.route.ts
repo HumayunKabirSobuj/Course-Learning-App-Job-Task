@@ -5,10 +5,7 @@ import { TopicControllers } from './topics.controller';
 
 const router = express.Router();
 
-router.get(
-  '/',
-  TopicControllers.getAllTopics,
-);
+router.get('/', TopicControllers.getAllTopics);
 router.get(
   '/:id',
   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
@@ -19,6 +16,17 @@ router.post(
   '/',
   RoleValidation(EnumUserRole.TEACHER),
   TopicControllers.createTopic,
+);
+
+router.patch(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  TopicControllers.updateTopic,
+);
+router.delete(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  TopicControllers.deleteTopic,
 );
 
 export const TopicRoutes = router;
