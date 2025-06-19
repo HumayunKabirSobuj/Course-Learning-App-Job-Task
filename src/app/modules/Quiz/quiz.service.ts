@@ -50,6 +50,12 @@ const createQuiz = async (payload: TQuiz) => {
   }
 };
 
+const getAllQuizzes = async () => {
+  const quizzes = await Quiz.find().populate('topicId', 'title content');
+  return quizzes;
+};
+
 export const QuizService = {
   createQuiz,
+  getAllQuizzes,
 };
