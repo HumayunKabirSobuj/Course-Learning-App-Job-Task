@@ -18,7 +18,7 @@ router.patch(
   CourseController.updateCourse,
 );
 router.post(
-  '/create-course',
+  '/',
   RoleValidation(EnumUserRole.TEACHER),
   CourseController.createCourse,
 );
