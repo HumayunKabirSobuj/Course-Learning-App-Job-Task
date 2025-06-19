@@ -55,7 +55,16 @@ const getAllQuizzes = async () => {
   return quizzes;
 };
 
+const getSingleQuiz = async (quizId: string) => {
+  const result = await Quiz.findById(quizId).populate(
+    'topicId',
+    'title content',
+  );
+  return result;
+};
+
 export const QuizService = {
   createQuiz,
   getAllQuizzes,
+  getSingleQuiz,
 };

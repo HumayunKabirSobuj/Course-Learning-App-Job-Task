@@ -5,17 +5,17 @@ import { QuizController } from './quiz.controller';
 
 const router = express.Router();
 
-// router.get('/', TopicControllers.getAllTopics);
-// router.get(
-//   '/:id',
-//   queryHelper(['title','content']),
-//   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
-//   TopicControllers.getSingleTopic,
-// );
+
 router.get(
   '/',
   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
   QuizController.getAllQuizzes,
+);
+
+router.get(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
+  QuizController.getSingleQuiz,
 );
 
 router.post(

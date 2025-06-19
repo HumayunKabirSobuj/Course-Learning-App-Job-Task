@@ -21,8 +21,19 @@ const getAllQuizzes = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const getSingleQuiz = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await QuizService.getSingleQuiz(id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Quiz retrieved successfully',
+    data: result,
+  });
+});
 
 export const QuizController = {
   createQuiz,
   getAllQuizzes,
+  getSingleQuiz,
 };
