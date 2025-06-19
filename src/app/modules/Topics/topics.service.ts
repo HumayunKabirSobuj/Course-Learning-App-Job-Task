@@ -59,15 +59,16 @@ const createTopic = async (payload: TTopic) => {
 };
 
 const getAllTopics = async () => {
-  const result = await Topic.find().populate('courseId', 'title description').populate('lessonId', 'title description');
+  const result = await Topic.find()
+    .populate('courseId', 'title description')
+    .populate('lessonId', 'title description');
   return result;
 };
 
 const getSingleTopic = async (topicId: string) => {
-  const result = await Topic.findById(topicId).populate([
-    'courseId',
-    'lessonId',
-  ]);
+  const result = await Topic.findById({_id:topicId})
+    .populate('courseId', 'title description')
+    .populate('lessonId', 'title description');
   if (!result) {
     throw new AppError(HttpStatus.NOT_FOUND, 'Topic not found');
   }

@@ -11,7 +11,7 @@ router.get(
   '/:id',
   queryHelper(['title','content']),
   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
-  TopicControllers.getAllTopics,
+  TopicControllers.getSingleTopic,
 );
 
 router.post(
