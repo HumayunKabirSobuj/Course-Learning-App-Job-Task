@@ -12,9 +12,16 @@ router.get(
   RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
   LessionController.getSingleLesson,
 );
+
+router.patch(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  LessionController.updateLession,
+);
 router.post(
-  '/create-lession',
+  '/',
   RoleValidation(EnumUserRole.TEACHER),
   LessionController.createLession,
 );
+
 export const LessionRoutes = router;

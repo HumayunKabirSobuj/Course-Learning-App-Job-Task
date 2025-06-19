@@ -68,14 +68,39 @@ const getAllLessonFromDB = async () => {
 };
 
 const getSingleLesson = async (id: string) => {
-  const result = await Lesson.findById(id).populate("courseId", "title description")
+  const result = await Lesson.findById(id).populate(
+    'courseId',
+    'title description',
+  );
   if (!result) {
     throw new AppError(HttpStatus.NOT_FOUND, 'Lesson not found');
   }
   return result;
 };
 
+const updateLession = async (id: string, payload: Partial<TLesson>) => {
+  try {
+    const isLessonExist = await Lesson.findById(id);
+    if (!isLessonExist) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'Lesson not found');
+    }
+
+    
+
+    const updatedLesson = await Lesson.findByIdAndUpdate(id, payload, {
+      new: true,
+    });
+
+    return updatedLesson;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    throw new AppError(500, err.message || 'Operation Failed');
+  }
+};
+
 export const LessionService = {
   createLession,
-  getAllLessonFromDB,getSingleLesson
+  getAllLessonFromDB,
+  getSingleLesson,
+  updateLession
 };
