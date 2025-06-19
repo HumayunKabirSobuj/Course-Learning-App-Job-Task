@@ -1,5 +1,5 @@
-import { TCourse } from './course.interface';
-import { Course } from './course.model';
+import { TCourse } from "./course.interface";
+import { Course } from "./course.model";
 
 const createCourse = async (payload: TCourse) => {
   //   console.log({ payload });

@@ -1,7 +1,7 @@
-import { EnumUserRole } from './../Auth/auth.interface';
+import { EnumUserRole } from '../Auth/auth.interface';
 import express from 'express';
-import { CourseController } from './course.controller';
 import RoleValidation from '../../middlewares/RoleValidation';
+import { CourseController } from './course.controller';
 
 const router = express.Router();
 
