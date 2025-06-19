@@ -67,7 +67,15 @@ const getAllLessonFromDB = async () => {
   return result;
 };
 
+const getSingleLesson = async (id: string) => {
+  const result = await Lesson.findById(id).populate("courseId", "title description")
+  if (!result) {
+    throw new AppError(HttpStatus.NOT_FOUND, 'Lesson not found');
+  }
+  return result;
+};
+
 export const LessionService = {
   createLession,
-  getAllLessonFromDB
+  getAllLessonFromDB,getSingleLesson
 };

@@ -14,7 +14,7 @@ const createLession = catchAsync(async (req, res) => {
 });
 
 const getAllLessonFromDB = catchAsync(async (req, res) => {
-  const result = await LessionService.getAllLessonFromDB(); 
+  const result = await LessionService.getAllLessonFromDB();
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
@@ -23,7 +23,19 @@ const getAllLessonFromDB = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleLesson = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await LessionService.getSingleLesson(id);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Single Lesson fetched successfully',
+    data: result,
+  });
+});
+
 export const LessionController = {
   createLession,
-  getAllLessonFromDB
+  getAllLessonFromDB,
+  getSingleLesson,
 };
