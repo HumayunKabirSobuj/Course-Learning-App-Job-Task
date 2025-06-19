@@ -2,10 +2,15 @@ import { EnumUserRole } from '../Auth/auth.interface';
 import express from 'express';
 import RoleValidation from '../../middlewares/RoleValidation';
 import { CourseController } from './course.controller';
+import { queryHelper } from '../../middlewares/queryHelper';
 
 const router = express.Router();
 
-router.get('/', CourseController.getAllCourses);
+router.get(
+  '/',
+  queryHelper(['title']),
+  CourseController.getAllCourses,
+);
 router.get(
   '/:id',
   CourseController.getSingleCourse,

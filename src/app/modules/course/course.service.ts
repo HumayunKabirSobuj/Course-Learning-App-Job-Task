@@ -1,5 +1,6 @@
-import { TCourse } from "./course.interface";
-import { Course } from "./course.model";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { TCourse } from './course.interface';
+import { Course } from './course.model';
 
 const createCourse = async (payload: TCourse) => {
   //   console.log({ payload });
@@ -8,8 +9,17 @@ const createCourse = async (payload: TCourse) => {
   return result;
 };
 
-const getAllCourses = async () => {
-  return Course.find().populate('teacherId', 'name email role');
+const getAllCourses = async (
+  filter: any,
+  pagination: {
+    skip: number;
+    limit: number;
+  },
+) => {
+  return Course.find(filter)
+    .skip(pagination.skip)
+    .limit(pagination.limit)
+    .populate('teacherId', 'name email role');
 };
 
 const getSingleCourse = async (id: string) => {
@@ -96,5 +106,5 @@ export const CourseServices = {
   getAllCourses,
   getSingleCourse,
   deleteCourse,
-  updateCourse
+  updateCourse,
 };

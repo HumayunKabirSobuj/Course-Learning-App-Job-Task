@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
@@ -22,12 +23,20 @@ const createCourse = catchAsync(async (req, res) => {
 });
 
 const getAllCourses = catchAsync(async (req, res) => {
-  const result = await CourseServices.getAllCourses();
+  const { filter, pagination } = (req as any).filterData;
+  const result = await CourseServices.getAllCourses(filter, pagination);
+  // If result is an array, use it directly; otherwise, adjust as needed
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Courses retrieved successfully',
-    data: result,
+    data: result, // আসল ডেটা (যেমন: কোর্স লিস্ট)
+    meta: {
+      total: result.length, // মোট কয়টা ডেটা আছে
+      page: pagination.page, // এখন কোন পেজে আছি
+      limit: pagination.limit, // প্রতি পেজে কয়টা
+      totalPages: Math.ceil(result.length / pagination.limit),
+    },
   });
 });
 
@@ -71,5 +80,5 @@ export const CourseController = {
   getAllCourses,
   getSingleCourse,
   deleteCourse,
-  updateCourse
+  updateCourse,
 };
