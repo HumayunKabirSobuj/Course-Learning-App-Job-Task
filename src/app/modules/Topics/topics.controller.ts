@@ -13,6 +13,29 @@ const createTopic = catchAsync(async (req, res) => {
   });
 });
 
+const getAllTopics = catchAsync(async (req, res) => {
+  const result = await TopicServices.getAllTopics();
+
+  sendResponse(res, {
+    statusCode: HttpStatus.OK,
+    success: true,
+    message: 'Topics retrieved successfully',
+    data: result,
+  });
+});
+const getSingleTopic = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await TopicServices.getSingleTopic(id);
+  sendResponse(res, {
+    statusCode: HttpStatus.OK,
+    success: true,
+    message: 'Topic retrieved successfully',
+    data: result,
+  });
+});
+
 export const TopicControllers = {
   createTopic,
+  getAllTopics,
+  getSingleTopic,
 };

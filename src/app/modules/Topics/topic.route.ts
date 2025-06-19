@@ -5,6 +5,16 @@ import { TopicControllers } from './topics.controller';
 
 const router = express.Router();
 
+router.get(
+  '/',
+  TopicControllers.getAllTopics,
+);
+router.get(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER, EnumUserRole.STUDENT),
+  TopicControllers.getAllTopics,
+);
+
 router.post(
   '/',
   RoleValidation(EnumUserRole.TEACHER),
