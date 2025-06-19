@@ -30,7 +30,7 @@ const getAllCourses = async (
 };
 
 const getSingleCourse = async (id: string, studentId: string) => {
-  console.log(studentId);
+  // console.log(studentId);
 
   const result = await Course.findById(id).populate(
     'teacherId',
