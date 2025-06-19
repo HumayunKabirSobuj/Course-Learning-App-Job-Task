@@ -74,8 +74,8 @@ cd Spark_Tech_Job_Task
 | `bcrypt_salt_rounds`     | Number of salt rounds for bcrypt password hashing.            |
 | `jwt_access_secret`      | Secret key for signing access tokens.                         |
 | `jwt_refresh_secret`     | Secret key for signing refresh tokens.                        |
-| `jwt_access_expires_in`  | Expiration time for access tokens (e.g., `1h`, `15m`).        |
-| `jwt_refresh_expires_in` | Expiration time for refresh tokens (e.g., `7d`).              |
+| `jwt_access_expires_in`  | Expiration time for access tokens .        |
+| `jwt_refresh_expires_in` | Expiration time for refresh tokens .              |
 
 
 **Step - 5:** use the below commend for run the application
