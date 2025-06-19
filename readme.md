@@ -37,7 +37,6 @@ It is designed to be scalable, maintainable, and secure, making it ideal for mod
 | Language       | TypeScript                     |
 | Database       | MongoDB, Mongoose              |
 | Auth           | JWT                            |
-| Validation     | Zod                            |
 | Error Handling | Custom global handler          |
 | Others         | ESLint, Prettier, dotenv, CORS |
 
