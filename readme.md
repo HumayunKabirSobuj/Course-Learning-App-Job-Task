@@ -49,7 +49,7 @@ It is designed to be scalable, maintainable, and secure, making it ideal for mod
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/HumayunKabirSobuj/Spark_Tech_Job_Task.git
+git clone https://github.com/HumayunKabirSobuj/Course-Learning-App-Job-Task.git
 cd Spark_Tech_Job_Task
 
 **Step - 2:** install the all packges
