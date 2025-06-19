@@ -98,9 +98,41 @@ const updateLession = async (id: string, payload: Partial<TLesson>) => {
   }
 };
 
+const deleteLession = async (id: string) => {
+  const session = await mongoose.startSession();  
+  session.startTransaction();
+  try {
+    const isLessonExist = await Lesson.findById(id);
+    if (!isLessonExist) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'Lesson not found');
+    }
+
+    const deletedLesson = await Lesson.findByIdAndDelete(id);
+    if (!deletedLesson) {
+      throw new AppError(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete lesson');
+    }
+
+    await Course.findByIdAndUpdate(
+      isLessonExist.courseId,
+      { $pull: { lessons: id } },
+      { new: true },
+    );
+
+    await session.commitTransaction();
+    return deletedLesson;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    await session.abortTransaction();
+    throw new AppError(500, err.message || 'Operation Failed');
+  } finally {
+    session.endSession();
+  }
+}
+
 export const LessionService = {
   createLession,
   getAllLessonFromDB,
   getSingleLesson,
-  updateLession
+  updateLession,
+  deleteLession
 };

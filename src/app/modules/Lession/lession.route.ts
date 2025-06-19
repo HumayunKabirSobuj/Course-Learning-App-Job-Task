@@ -24,4 +24,10 @@ router.post(
   LessionController.createLession,
 );
 
+router.delete(
+  '/:id',
+  RoleValidation(EnumUserRole.TEACHER),
+  LessionController.deleteLession,
+);
+
 export const LessionRoutes = router;

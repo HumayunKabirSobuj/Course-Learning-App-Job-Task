@@ -46,10 +46,23 @@ const updateLession = catchAsync(async (req, res) => {
 
 });
 
+const deleteLession = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const result = await LessionService.deleteLession(id);
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Lesson deleted successfully',
+    data: result,
+  });
+}
+);
+
 
 export const LessionController = {
   createLession,
   getAllLessonFromDB,
   getSingleLesson,
-  updateLession
+  updateLession,
+  deleteLession
 };
