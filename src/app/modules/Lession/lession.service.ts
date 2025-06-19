@@ -11,22 +11,14 @@ const createLession = async (payload: TLesson) => {
 
   try {
     const { courseId, title, description } = payload;
-    // console.log(payload);
-    const isCourseExist = await Course.findById({
-      _id: courseId,
-    });
-    // console.log(isCourseExist);
+
+    const isCourseExist = await Course.findById({ _id: courseId }).session(session);
 
     if (!isCourseExist) {
       throw new AppError(HttpStatus.NOT_FOUND, 'Course not found');
     }
 
-    const isLessonExist = await Lesson.findOne({
-      courseId,
-      title,
-    });
-
-    // console.log(isLessonExist);
+    const isLessonExist = await Lesson.findOne({ courseId, title }).session(session);
 
     if (isLessonExist) {
       throw new AppError(HttpStatus.CONFLICT, 'Lesson already exists');
@@ -37,30 +29,26 @@ const createLession = async (payload: TLesson) => {
       title,
       description,
     };
-    // console.log(lessonData);
 
-    const lessionPost = await Lesson.create(lessonData);
-    // console.log(lessionPost);
+    const [lessionPost] = await Lesson.create([lessonData], { session });
+
     await Course.findByIdAndUpdate(
       courseId,
       { $addToSet: { lessons: lessionPost._id } },
-      { new: true },
+      { new: true, session },
     );
 
-    // console.log(updatedCourse);
     await session.commitTransaction();
     return lessionPost;
-
-    // const result = await Lesson.create(payload);
-    // return result
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     await session.abortTransaction();
-    throw new AppError(500, err.message || 'Operation Faid');
+    throw new AppError(500, err.message || 'Operation Failed');
   } finally {
     session.endSession();
   }
 };
+
 
 const getAllLessonFromDB = async () => {
   const result = await Lesson.find();
