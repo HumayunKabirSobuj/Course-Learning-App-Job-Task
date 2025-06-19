@@ -5,6 +5,11 @@ import { LessionController } from './lession.controller';
 
 const router = express.Router();
 
+router.get(
+  '/', 
+  LessionController.getAllLessonFromDB,
+);
+
 router.post(
   '/create-lession',
   RoleValidation(EnumUserRole.TEACHER),

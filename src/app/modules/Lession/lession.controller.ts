@@ -13,6 +13,17 @@ const createLession = catchAsync(async (req, res) => {
   });
 });
 
+const getAllLessonFromDB = catchAsync(async (req, res) => {
+  const result = await LessionService.getAllLessonFromDB(); 
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'All Lessons fetched successfully',
+    data: result,
+  });
+});
+
 export const LessionController = {
   createLession,
+  getAllLessonFromDB
 };

@@ -62,6 +62,12 @@ const createLession = async (payload: TLesson) => {
   }
 };
 
+const getAllLessonFromDB = async () => {
+  const result = await Lesson.find();
+  return result;
+};
+
 export const LessionService = {
   createLession,
+  getAllLessonFromDB
 };
