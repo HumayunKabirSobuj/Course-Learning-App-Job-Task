@@ -50,7 +50,7 @@ It is designed to be scalable, maintainable, and secure, making it ideal for mod
 
 ```bash
 git clone https://github.com/HumayunKabirSobuj/Course-Learning-App-Job-Task.git
-cd Spark_Tech_Job_Task
+cd Course-Learning-App-Job-Task
 
 **Step - 2:** install the all packges
 ```
